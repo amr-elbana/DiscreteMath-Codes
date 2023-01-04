@@ -1,0 +1,51 @@
+#include<stdio.h>
+#define N 7
+#define R 4
+
+long long C(int n,int r)
+{
+	long long numerator=1,denom=1;
+	for(int k=1;k<=r;k++)
+	{
+		numerator*=(n-k+1);
+		denom*=k;
+	}
+	return numerator/denom;
+}
+
+void main()
+{
+	int d[R],i,j,k,max;
+
+	//create and write out smallest combination
+	for(k=0;k<R;k++)
+		d[k]=k+1;
+	//print first combination
+	for(i=0;i<R;i++)
+		printf("%d\t",d[i]);
+	printf("\n");
+
+	//create and write out remaining combinations
+	for(k=2;k<=C(N,R);k++)
+	{
+		//look right to left for first non-max value
+		max=N;
+		i=R-1;
+		while(d[i]==max)
+		{
+			i--;max--;
+		}
+
+		//now di < max, need to increment di
+		d[i]++;
+		//reset values right of di
+		for(j=i+1;j<R;j++)
+			d[j]=d[j-1]+1;
+		
+		//write d1d2�dr
+		for(i=0;i<R;i++)
+			printf("%d\t",d[i]);
+		printf("\n");
+
+	}
+}
