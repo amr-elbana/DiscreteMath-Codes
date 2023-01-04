@@ -1,0 +1,80 @@
+//TSP demo code
+#include<stdio.h>
+#define SIZE 4
+long long factorial(int n)
+{
+	long long result = 1;
+	for(int i=2;i<=n;i++)
+		result*=i;
+	return result;
+}
+
+int eval_cost(int d[])
+{
+	int costs[SIZE][SIZE]={{0,10,15,20},
+						   {10,0,35,25},
+	                       {15,35,0,30},
+						   {20,25,30,0}};
+	int cost=0,k;
+	for(k=0;k<SIZE-1;k++)
+		cost+=costs[d[k]-1][d[k+1]-1];
+	cost+=costs[d[k]-1][d[0]-1];
+	return cost;
+}
+
+int main()
+{
+	int d[SIZE],i,j,k,z;
+	long long fact_n=factorial(SIZE);
+	for(k=0;k<SIZE;k++)
+		d[k]=k+1;
+
+	//write permutation
+	for(k=0;k<SIZE;k++)
+		printf("%d\t",d[k]);
+	printf("%d\n",eval_cost(d));
+
+	//generate and print remaining permutations
+	for(k=2;k<=fact_n;k++)
+	{
+		//look right to left for first break in increasing sequence
+		i=SIZE-2;
+		j=SIZE-1;
+		while(d[i]>d[j])
+		{
+			i--;j--;
+		}
+		//now di < dj, need to replace di with next largest integer
+
+		//look right to left for smallest value greater than di
+		j=SIZE-1;
+		while(d[i]>d[j]) j--;
+		//now dj is smallest value > di
+
+		//swap di and dj
+		int temp=d[i];
+		d[i]=d[j];
+		d[j]=temp;
+
+		//reverse the digits to the right of index i
+		i++; j=SIZE-1;
+		while(i<j)
+		{
+			//swap di and dj
+			int temp=d[i];
+			d[i]=d[j];
+			d[j]=temp;
+			i++;j--;
+		}
+
+		//print current permutation
+		for(z=0;z<SIZE;z++)
+			printf("%d\t",d[z]);
+		printf("%d\n",eval_cost(d));
+
+		//Evaluate cost of current permutation
+
+
+	}
+
+}
