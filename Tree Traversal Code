@@ -1,0 +1,60 @@
+#include<stdio.h>
+
+void preorder(int tree[][2],int r)
+{
+	//ending condition
+	if(r==0) return;
+
+	//write r
+	printf("%d ",r);
+	for(int i=0;i<2;i++) //call preorder for left and right
+		preorder(tree,tree[r-1][i]);
+};
+
+void inorder(int tree[][2],int r)
+{
+	//ending condition
+	if(r==0) return;
+
+	//traverse left subtree
+	inorder(tree,tree[r-1][0]);
+	//write r
+	printf("%d ",r);
+	//traverse right subtree
+	inorder(tree,tree[r-1][1]);
+};
+
+void postorder(int tree[][2],int r)
+{
+	//ending condition
+	if(r==0) return;
+
+	for(int i=0;i<2;i++) //call postorder for left and right
+		postorder(tree,tree[r-1][i]);
+	//write r
+	printf("%d ",r);
+};
+
+
+int main()
+{
+	//define the tree
+	int tree[6][2]={
+	{2,3},
+	{4,5},
+	{0,6},
+	{0,0},
+	{0,0},
+	{0,0}};
+
+	//traverse using preorder
+	//preorder(tree,1);
+
+	//traverse using inorder
+	//inorder(tree,1);
+
+	//traverse using postorder
+	postorder(tree,1);
+
+    return 0;
+}
